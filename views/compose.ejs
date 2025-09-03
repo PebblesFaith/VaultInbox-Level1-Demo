@@ -1,0 +1,29 @@
+<section>
+  <h2>Compose Letter</h2>
+<div class="pricing-info">
+  <h3>Pricing</h3>
+  <p>PDF page-count tiers (USPS-style):</p>
+  <ul>
+    <li>1 – 5 pages → <strong>$2.00</strong></li>
+    <li>6 – 10 pages → <strong>$4.00</strong></li>
+    <li>11 – 15 pages → <strong>$6.00</strong></li>
+    <li>16 – 20 pages → <strong>$8.00</strong></li>
+    <li>21 + pages → <strong>$10.00</strong> + $2 per extra 5 pages</li>
+  </ul>
+</div>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form method="post" action="/send" enctype="multipart/form-data">
+    <label>To
+      <select name="recipient_id" required>
+        <option value="">-- Select recipient --</option>
+        <% recipients.forEach(r => { %>
+          <option value="<%= r.id %>"><%= r.email %></option>
+        <% }) %>
+      </select>
+    </label>
+    <label>Subject <input type="text" name="subject" /></label>
+    <label>Body <textarea name="body" rows="8" placeholder="Write your letter..."></textarea></label>
+    <label>Attachments (PDF) <input type="file" name="attachments" multiple accept="application/pdf" /></label>
+    <button>Send</button>
+  </form>
+</section>

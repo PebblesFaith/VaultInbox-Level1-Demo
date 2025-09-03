@@ -1,0 +1,27 @@
+<section>
+  <h2>My Emails</h2>
+  <table>
+    <thead><tr><th>Email</th><th>Primary</th><th>Verified</th><th>Actions</th></tr></thead>
+    <tbody>
+    <% emails.forEach(e => { %>
+      <tr>
+        <td><%= e.email %></td>
+        <td><%= e.is_primary ? 'Yes' : 'No' %></td>
+        <td><%= e.is_verified ? 'Yes' : 'No' %></td>
+        <td>
+          <% if (!e.is_primary) { %>
+            <form method="post" action="/settings/emails/primary/<%= e.id %>" style="display:inline"><button>Make Primary</button></form>
+            <form method="post" action="/settings/emails/remove/<%= e.id %>" style="display:inline"><button>Remove</button></form>
+          <% } else { %>(primary)<% } %>
+        </td>
+      </tr>
+    <% }) %>
+    </tbody>
+  </table>
+
+  <h3>Add Email</h3>
+  <form method="post" action="/settings/emails/add">
+    <label>New Email <input type="email" name="email" required /></label>
+    <button>Add</button>
+  </form>
+</section>

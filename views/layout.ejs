@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="trust">
+<head>
+  <% if (typeof csrfToken !== 'undefined') { %><meta name="csrf-token" content="<%= csrfToken %>"><% } %>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= (typeof title !== 'undefined' && title) ? (title + ' · ' + brandName) : brandName %></title>
+  <link rel="stylesheet" href="/static/styles.css?v=<%= (typeof appVersion !== "undefined" ? appVersion : "dev") %>"/>
+</head>
+<body>
+<header>
+  <h1><a href="/"><%= brandName %></a></h1>
+  <% if (typeof user !== 'undefined' && user) { %>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/inbox">Inbox</a>
+    <a href="/sent">Sent</a>
+    <a href="/compose">Compose</a>
+    <div class="dropdown">
+      <a href="/settings" class="nav-parent" data-dropdown="settings">Settings</a>
+      <div class="dropdown-menu">
+        <a href="/settings">Profile &amp; Password</a>
+        <a href="/settings/emails">Email Address</a>
+        <a href="/settings#avatar">Profile Photo</a>
+      </div>
+    </div>
+    <a href="/pricing">Pricing</a>
+    <a href="/about">About</a>
+    <a href="/logout">Logout</a>
+  </nav>
+  <div class="whoami">
+    <div class="whoami-text">
+      Signed in as <strong><%= user.email %></strong><br/>
+      <small>Acct # <code><%= user.id %></code></small>
+    </div>
+    <a href="/settings#avatar" title="Profile photo">
+      <img class="avatar avatar-sm" src="<%= (user && user.photo_path) ? ('/avatars/' + user.photo_path) : '/static/avatar-default.svg' %>" alt="avatar" />
+    </a>
+  </div>
+  <% } else { %>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/about">About</a>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+  </nav>
+  <% } %>
+</header>
+<main><%- body %></main>
+<footer><small>© <%= new Date().getFullYear() %> <%= brandName %></small> · <span>v<%= (typeof appVersion !== "undefined" ? appVersion : "dev") %></span></footer>
+<script src="/static/app.js"></script>
+<script src="/js/settings-otp.js?v=8"></script>
+</body>
+</html>

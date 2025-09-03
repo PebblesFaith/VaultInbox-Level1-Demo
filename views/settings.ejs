@@ -1,0 +1,65 @@
+<section class="card" style="max-width:720px;margin:1.2rem auto;padding:1.2rem;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:.75rem"><h1 style="margin:0">Settings</h1><div style="display:flex;gap:.5rem"><a class="btn" href="/settings/emails">Manage Emails</a><a class="btn btn-ghost" href="#avatar">Profile Photo</a></div></div>
+  <% if (error) { %><div class="alert error"><%= error %></div><% } %>
+  <% if (message) { %><div class="alert ok"><%= message %></div><% } %>
+  <form class="auth" method="post" action="/settings">
+    <label>Current password
+      <input type="password" name="current_password" required />
+    </label>
+    <hr />
+    <label>Email
+      <input type="email" name="new_email" value="<%= (user && user.email) ? user.email : '' %>" />
+    </label>
+    <label>New password
+      <input type="password" name="new_password" placeholder="Leave blank to keep current" />
+    </label>
+    <label>Confirm new password
+      <input type="password" name="confirm_password" placeholder="Re-enter new password" />
+    </label>
+    <div style="margin-top:1rem;display:flex;gap:.6rem;">
+      <button type="submit" class="btn">Save changes</button>
+      <a href="/" class="btn btn-outline">Cancel</a>
+    </div>
+  </form>
+  <p class="muted" style="margin-top:.8rem;">Tip: only change fields you need. Current password is required for security.</p>
+</section>
+
+<hr/>
+<h2 id="avatar">Profile Photo</h2>
+<div style="display:flex;align-items:center;gap:.75rem">
+  <img class="avatar" src="<%= user && user.photo_path ? ("/avatars/" + user.photo_path) : "/static/avatar-default.svg" %>" alt="avatar" />
+  <div class="card" style="background:transparent;border:none;padding:0;margin:.5rem 0 1rem 0"><h3 style="margin:.25rem 0">Email Verification
+<!-- Zero-JS fallback controls for Email Verification -->
+<div class="mt-2" data-otp-fallback="1" style="margin-top:8px;">
+  <a href="/settings/photo/otp/send?email=<%= encodeURIComponent((user && (user.email || user.DMVEmail)) || '') %>" class="chip sm">
+    Send code to <%= (typeof user !== 'undefined' && (user.email || user.DMVEmail)) ? (user.email || user.DMVEmail) : 'your email' %>
+  </a>
+  <form method="get" action="/settings/photo/otp/verify" style="display:inline; margin-left:8px;">
+    <input type="text" name="code" maxlength="6" inputmode="numeric" class="input sm" placeholder="123456" style="width:90px;">
+    <button type="submit" class="chip sm">Verify</button>
+  </form>
+</div>
+</h3><form method="post" action="/settings/photo/otp/send" style="margin-bottom:.5rem"><button class="btn">Send code to <%= user && user.email ? user.email : "your email" %></button></form><form method="post" action="/settings/photo/otp/verify" style="display:flex;gap:.5rem;align-items:center"><label>Code <input type="text" name="code" inputmode="numeric" pattern="[0-9]{6}" placeholder="123456" required style="width:120px"/></label><button class="btn btn-ghost">Verify</button></form><p class="muted">You must verify within the last 10 minutes before uploading a new profile photo.</p></div>
+<form action="/settings/photo" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp" required />
+    <button class="btn" type="submit">Upload new photo</button>
+  </form>
+  <% if (user && user.photo_path) { %>
+  <form action="/settings/photo/delete" method="post" style="margin-left:1rem">
+    <button class="btn btn-secondary" type="submit">Remove</button>
+  </form>
+  <% } %>
+</div>
+
+<script src="/js/settings-otp.js"></script>
+<script data-otp-fallback-banner>
+(function(){
+  var el=document.querySelector('[data-settings-alert]'); if(!el) return;
+  var q=new URLSearchParams(location.search);
+  if(q.has('otp_err')){ el.textContent=q.get('otp_err'); el.classList.add('error'); el.style.display='block'; }
+  else if(q.has('otp')){
+    var m={sent:'Verification code sent.', verified:'Verified. You have 10 minutes to upload your photo.', invalid:'Invalid code.', expired:'No active code or it expired.'}[q.get('otp')]||'';
+    if(m){ el.textContent=m; el.classList.add('success'); el.style.display='block'; }
+  }
+})();
+</script>

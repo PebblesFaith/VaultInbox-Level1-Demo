@@ -1,0 +1,69 @@
+<section class="card" style="max-width: 980px; margin: 1.2rem auto; padding: 1.2rem;">
+  <h1 style="margin-top:0">About VaultInbox</h1>
+  <p><strong>When your message matters, it belongs in the vault.</strong></p>
+  <p>VaultInbox is the next generation of secure, USPS-style verified digital letters — powered by the patented <strong>Lockbox Protocol</strong> from our parent company, AccouNetrics. We’re not here to replace the post office; we’re here to redefine trust in digital correspondence.</p>
+  <p>Every VaultInbox letter is locked, tracked, and verified with military-grade cryptographic authentication — without physical keys or in-person handling.</p>
+  <ul>
+    <li><strong>Tamper-proof delivery</strong> — every transmission is sealed against interception.</li>
+    <li><strong>Immutable proof of receipt</strong> — timestamped, device-bound, and stored forensically.</li>
+    <li><strong>Anywhere access</strong> — send from your home, office, or mobile device in seconds.</li>
+  </ul>
+  <p><em>Your words are valuable. We keep them in the vault.</em></p>
+</section>
+
+<section class="card" style="max-width: 980px; margin: 1.2rem auto; padding: 1.2rem;">
+  <h2>Why We Exist</h2>
+  <p>The modern world demands instant communication — but instant often means insecure. Sensitive letters are still being intercepted, delayed, or “lost,” leaving senders with no proof their message arrived. VaultInbox delivers the speed of digital with the verification of certified mail. No queues. No paper slips. No doubt.</p>
+</section>
+
+<section class="card" style="max-width: 980px; margin: 1.2rem auto; padding: 1.2rem;">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+    <h2 style="margin:0">Revenue &amp; Adoption Projection</h2>
+    <div><button id="dlCsv" class="btn">Download CSV</button></div>
+  </div>
+  <p class="muted" style="margin:.25rem 0 1rem;">Years: 2025–2027 (server-provided data; update in <code>server.js</code>)</p>
+  <div style="margin-top:1rem; background:#fff; border:1px solid var(--border); border-radius:12px; padding:1rem;">
+    <canvas id="revChart" height="120"></canvas>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ABOUT_DATA = <%- JSON.stringify(data) %>;
+  const labels  = ABOUT_DATA.map(r => r.year);
+  const revenue = ABOUT_DATA.map(r => r.revenue);
+  const letters = ABOUT_DATA.map(r => r.letters);
+  const toCurrency = (n)=> new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
+
+  const ctx = document.getElementById('revChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Revenue', data: revenue, yAxisID: 'y1', borderWidth: 1 },
+        { label: 'Letters (units)', data: letters, type: 'line', yAxisID: 'y2', borderWidth: 2, tension: 0.25, pointRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' },
+        tooltip: { callbacks: { label: (ctx)=> (ctx.dataset.yAxisID==='y1' ? 'Revenue: '+toCurrency(ctx.parsed.y) : 'Letters: '+ctx.parsed.y.toLocaleString()) } }
+      },
+      scales: {
+        y1: { position: 'left',  ticks: { callback: (v)=> toCurrency(v) }, grid: { drawOnChartArea: false } },
+        y2: { position: 'right', ticks: { callback: (v)=> v.toLocaleString() }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+
+  document.getElementById('dlCsv').addEventListener('click', () => {
+    const header = ['Year','Customers','Letters','Revenue','GrossMargin'];
+    const rows = ABOUT_DATA.map(r => [r.year, r.customers, r.letters, r.revenue, r.grossMargin]);
+    const csv = [header, ...rows].map(a => a.join(',')).join('\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+    const a = document.createElement('a'); a.href=url; a.download='vaultmail_projection.csv'; a.click();
+    URL.revokeObjectURL(url);
+  });
+</script>

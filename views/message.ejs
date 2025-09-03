@@ -1,0 +1,35 @@
+<section>
+  <h2>Letter</h2>
+  <div class="meta">
+    <p><strong>Tracking ID:</strong> <code><%= msg.uuid %></code></p>
+    <p><strong>From:</strong> <%= msg.sender_email %></p>
+    <p><strong>To:</strong> <%= msg.recipient_email %></p>
+    <p><strong>Sent:</strong> <%= msg.sent_time %></p>
+    <p><strong>Status:</strong> <%= msg.status %></p>
+    <% if (msg.opened_time) { %><p><strong>Opened:</strong> <%= msg.opened_time %></p><% } %>
+    <% if (msg.closed_time) { %><p><strong>Closed:</strong> <%= msg.closed_time %></p><% } %>
+  </div>
+  <article class="letter">
+    <h3><%= msg.subject || '(no subject)' %></h3>
+    <pre class="letter-body"><%= msg.body || "" %></pre>
+  </article>
+
+  <% if (msg.status === 'closed') { %>
+    <div class="note">
+      This tracking number is <strong>CLOSED</strong>. Replies are disabled.
+    </div>
+  <% } %>
+
+  <% if (attachments && attachments.length) { %>
+    <h4>Attachments</h4>
+    <ul>
+      <% attachments.forEach(a => { %>
+        <li><a href="/download/<%= msg.uuid %>/<%= encodeURIComponent(a.filename) %>"><%= a.filename %></a> (<%= a.mime_type %>, <%= a.size %> bytes)</li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <% if (user.id === msg.sender_id) { %>
+    <p><a href="/receipt/<%= msg.uuid %>">Download Proof of Delivery (PDF)</a></p>
+  <% } %>
+</section>

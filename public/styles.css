@@ -1,0 +1,161 @@
+/* AccouNetrics Theme */
+:root{
+  --bg:#0b1220; --panel:#0f172a; --muted:#94a3b8; --text:#e2e8f0;
+  --brand:#22d3ee; --brand-2:#60a5fa; --accent:#a78bfa;
+  --btn:#22d3ee; --btn-hover:#06b6d4; --ghost:#1f2937;
+}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:linear-gradient(180deg,#0b1220 0%,#0f172a 60%);color:var(--text)}
+a{color:var(--brand-2);text-decoration:none}
+a:hover{opacity:.9}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(15,23,42,.7);backdrop-filter:blur(6px);border-bottom:1px solid #1f2937;position:sticky;top:0;z-index:20}
+header h1 a{color:#e2e8f0;text-decoration:none}
+nav a{margin-right:14px;padding:6px 8px;border-radius:10px}
+nav a:hover{background:#111827}
+button,.btn{padding:10px 14px;border:0;border-radius:12px;background:var(--btn);color:#042f2e;cursor:pointer;font-weight:600;display:inline-block}
+button:hover,.btn:hover{background:var(--btn-hover)}
+.btn-ghost{background:var(--ghost);color:#e5e7eb;border:1px solid #334155}
+main{padding:24px;max-width:1000px;margin:0 auto}
+section{background:rgba(17,24,39,.6);border:1px solid #1f2937;padding:18px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.25);margin-bottom:18px}
+.hero{background:radial-gradient(1200px 400px at 50% -10%, rgba(34,211,238,.2), transparent), rgba(17,24,39,.4);text-align:center}
+.hero-inner{max-width:900px;margin:0 auto;padding:40px 10px}
+.hero h1{font-size:2rem;margin:0 0 10px 0;color:#eaf2ff}
+.lede{color:var(--muted);font-size:1.05rem;margin:0 auto 18px;max-width:720px}
+.cta{display:flex;gap:12px;justify-content:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{padding:16px;border-radius:14px;background:#0b1220;border:1px solid #1f2937}
+.card h3{margin:0 0 6px 0;color:#dbeafe}
+.card p{margin:0;color:#a7b0c0}
+.cta-band{text-align:center;background:linear-gradient(90deg,rgba(96,165,250,.15),rgba(167,139,250,.15));border:1px solid #1f2937}
+table{width:100%;border-collapse:collapse;background:transparent}
+th,td{border-bottom:1px solid #1f2937;padding:10px;text-align:left}
+.error{background:#7f1d1d;color:#fee2e2;padding:10px;border-radius:10px;margin:10px 0;border:1px solid #ef4444}
+.note{background:#0e7490;color:#e0f2fe;padding:10px;border-radius:10px;margin:8px 0;border:1px solid #164e63}
+.whoami{font-size:.9rem;color:#cbd5e1}
+footer{color:#94a3b8;text-align:center;padding:20px 0}
+
+/* === Trust Light Theme (Mauve) v0.1.7v === */
+html[data-theme="trust"] {
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --text: #151216;
+  --muted: #5a545d;
+  --border: #e7e3e9;
+  --primary: #836c7e;
+  --primary-600: #6f5a6a;
+  --primary-700: #5d4c58;
+  --accent: #bda9b7;
+  --danger: #b91c1c;
+  --hover-bg: rgba(120,120,120,0.22);
+  --hover-bg-weak: rgba(120,120,120,0.14);
+}
+html[data-theme="trust"] body { background: var(--bg); color: var(--text); }
+html[data-theme="trust"] section, html[data-theme="trust"] .card { background: var(--panel); border:1px solid var(--border); border-radius:14px; }
+html[data-theme="trust"] a.btn, html[data-theme="trust"] .btn { background: var(--primary); color:#fff; }
+html[data-theme="trust"] a.btn:hover, html[data-theme="trust"] .btn:hover { background: var(--primary-600); color:#fff; }
+html[data-theme="trust"] :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+header { background: var(--primary-700) !important; border-bottom: 1px solid rgba(0,0,0,0.06); }
+header h1 a { color:#fff !important; }
+header nav a { color:#fff !important; text-decoration:none; padding:.55rem .8rem; border-radius:.6rem; font-weight:600; }
+header nav a:hover, header nav a:focus { background: var(--primary-600) !important; color:#fff !important; }
+main { max-width:980px; margin:0 auto; padding:1.25rem; }
+label { display:block; font-weight:600; margin:.6rem 0 .35rem; }
+input[type="text"], input[type="email"], input[type="password"], select, textarea {
+  width:100%; max-width:720px; display:block; background:#fff; color:var(--text);
+  border:1px solid var(--border); padding:12px 14px; border-radius:10px; font-size:16px; line-height:1.4;
+}
+textarea { min-height:160px; resize:vertical; }
+input::placeholder, textarea::placeholder { color:#7a707a; }
+
+.muted{color:var(--muted);}
+/* === v0.1.7ai auth/button & wrapping fixes === */
+form[action="/login"] button[type="submit"],
+form[action="/register"] button[type="submit"],
+form[action="/login"] input[type="submit"],
+form[action="/register"] input[type="submit"],
+.auth button[type="submit"],
+.auth input[type="submit"] {
+  background: var(--primary) !important;
+  color: #fff !important;
+  border: 1px solid var(--primary-600);
+  border-radius: 10px;
+  padding: 12px 20px;
+  min-height: 44px;
+  min-width: 160px;
+  font-size: 18px;
+  line-height: 1.1;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 600;
+}
+form[action="/login"] button[type="submit"]:hover,
+form[action="/register"] button[type="submit"]:hover,
+form[action="/login"] input[type="submit"]:hover,
+form[action="/register"] input[type="submit"]:hover,
+.auth button[type="submit"]:hover,
+.auth input[type="submit"]:hover {
+  background: var(--primary-600) !important;
+  color: #fff !important;
+}
+
+/* Prevent long text/URLs from spilling out of boxes */
+textarea { white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; }
+.card, .message-body, .content, .attachments, .attachments a, .card p, .card li {
+  overflow-wrap: anywhere; word-break: break-word;
+}
+
+/* reinforce */
+.auth .btn{background:var(--primary)!important;color:#fff!important;border:1px solid var(--primary-600);}
+/* === v0.1.7ak auth buttons color consistency === */
+.card form button[type="submit"],
+.card form input[type="submit"] {
+  background: var(--primary) !important;
+  color: #fff !important;
+  border: 1px solid var(--primary-600) !important;
+  border-radius: 10px !important;
+  padding: 12px 20px !important;
+  min-height: 44px !important;
+  min-width: 160px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+.card form button[type="submit"]:hover,
+.card form input[type="submit"]:hover {
+  background: var(--primary-600) !important;
+  color: #fff !important;
+}
+
+
+/* Scoped wrapping for letter body only */
+.letter-body { 
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+/* Avatar */
+.avatar{
+  width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(0,0,0,.08);
+}
+
+
+/* --- Dropdown for Settings --- */
+nav .dropdown{position:relative;display:inline-block}
+nav .dropdown .nav-parent{display:inline-block}
+nav .dropdown .dropdown-menu{
+  display:none;position:absolute;top:100%;left:0;z-index:30;
+  background:var(--ghost);border:1px solid #334155;border-radius:12px;
+  min-width:220px;padding:8px;box-shadow:0 10px 30px rgba(0,0,0,.35)
+}
+nav .dropdown:hover .dropdown-menu,
+nav .dropdown.open .dropdown-menu{display:block}
+nav .dropdown .dropdown-menu a{display:block;margin:0;padding:8px 10px;border-radius:10px;white-space:nowrap}
+nav .dropdown .dropdown-menu a:hover{background:#111827}
+
+/* Avatar */
+.avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid #334155}
+.avatar-sm{width:28px;height:28px}
+
+/* whoami block aligned right with avatar */
+header .whoami{margin-left:auto;display:flex;align-items:center;gap:10px;text-align:right}
+header .whoami .whoami-text{line-height:1.1}

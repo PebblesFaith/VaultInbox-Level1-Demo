@@ -1,0 +1,18 @@
+<section>
+  <h2>Sent</h2>
+  <% if (!messages.length) { %><p>No sent messages.</p><% } else { %>
+  <table>
+    <thead><tr><th>To</th><th>Subject</th><th>Sent</th><th>Status</th></tr></thead>
+    <tbody>
+    <% messages.forEach(m => { %>
+      <tr>
+        <td><%= m.recipient_email %></td>
+        <td><a href="/message/<%= m.uuid %>"><%= m.subject || '(no subject)' %></a></td>
+        <td><%= m.sent_time %></td>
+        <td><%= m.status %></td>
+      </tr>
+    <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</section>

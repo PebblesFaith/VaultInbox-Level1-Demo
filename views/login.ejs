@@ -1,0 +1,10 @@
+<section class="auth">
+  <h2>Sign In</h2>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form class="auth" method="post" action="/login">
+    <label>Email <input type="email" name="email" required /></label>
+    <label>Password <input type="password" name="password" required /></label>
+    <button>Login</button>
+  </form>
+  <p>No account? <a href="/register">Register</a></p>
+</section>
